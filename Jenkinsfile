@@ -1,10 +1,17 @@
-@Library('deop.rautomates.jecda')
-node {
-	def paramap [ : ]
+#!/usr/bin/env groovy
+@Library(['deop.rautomates.jecda' ]) _ 
+
+	def  paramap =  [ : ]
 	paramap[ "ApplicationURL" ] = ApplicationURL
 	paramap[ "ApplicationRevision" ] = ApplicationRevision
-	script {
-		gitche(paramap)
+	
+	pipeline {
+	    agent { node { master }  }
+	    stages {
+	        stage ("Init") {
+	        	script {
+	        	    gitche(paramap)
+	        	}
+	         }
+	    }
 	}
-}
-
